@@ -1,43 +1,85 @@
+//DB-F
+SnowFlake[] sFlake;
 void setup()
 {
-  //your code here
+  size(500, 500);
+  background(0);
+  frameRate(100);
+  strokeWeight(15);
+  sFlake=new SnowFlake[500];
+  for (int i = 0; i < sFlake.length; i++)
+  {
+    sFlake[i]=new SnowFlake();
+  }
 }
 void draw()
 {
-  //your code here
+  for (int i = 0; i < sFlake.length; i++) 
+  {
+    sFlake[i].erase();
+    sFlake[i].lookDown();
+    sFlake[i].wrap();
+    sFlake[i].move();
+    sFlake[i].show();
+  }
 }
 void mouseDragged()
 {
-  //your code here
+  if (mouseButton == LEFT)
+  {
+    stroke(255, 0, 0);
+    line(pmouseX, pmouseY, mouseX, mouseY);
+  } 
+  else if (mouseButton == RIGHT) 
+  {
+    stroke(0);
+    line(pmouseX, pmouseY, mouseX, mouseY);
+  }
 }
-
 class SnowFlake
 {
-  //class member variable declarations
+  int myX, myY;
+  boolean Move;
   SnowFlake()
   {
-    //class member variable initializations
+    myX = (int)(Math.random()*500);
+    myY = (int)(Math.random()*500);
   }
   void show()
   {
-    //your code here
+    noStroke();
+    fill(255);
+    ellipse(myX, myY, 10, 10);
   }
   void lookDown()
   {
-    //your code here
+    if (get(myX, myY+8) == color(0)) 
+    {
+      Move=true;
+    }
+    else 
+    {
+      Move=false;
+    }
   }
   void erase()
   {
-    //your code here
+    noStroke();
+    fill(0);
+    ellipse(myX, myY, 12, 12);
   }
   void move()
   {
-    //your code here
+    if (Move == true) 
+    {
+      myY++;
+    }
   }
   void wrap()
   {
-    //your code here
+    if (myY>=492) {
+      myY=0;
+      myX=(int)(Math.random()*500);
+    }
   }
 }
-
-
